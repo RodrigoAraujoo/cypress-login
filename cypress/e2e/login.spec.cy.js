@@ -1,3 +1,5 @@
+import userData from '../fixtures/userData.json'
+
 describe('Orange HRM Tests', () => {
 
 const SelectorsList = {
@@ -10,11 +12,13 @@ const SelectorsList = {
   wrongCredentialAlertUserRequired: ".oxd-input-field-error-message",
 }
 
+
+
   it('Login com sucesso', () => {
 
     cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
-    cy.get(SelectorsList.usernameField).type("Admin")
-    cy.get(SelectorsList.passowordField).type("admin123")
+    cy.get(SelectorsList.usernameField).type(userData.userSucess.username)
+    cy.get(SelectorsList.passowordField).type(userData.userSucess.password)
     cy.get(SelectorsList.loginButton).click()
     cy.location('pathname').should('equal', '/web/index.php/dashboard/index')
     cy.get(SelectorsList.sectionTitleTopBar).contains('Dashboard')
@@ -23,8 +27,8 @@ const SelectorsList = {
 
     it('Login falho', () => {
     cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
-    cy.get(SelectorsList.usernameField).type("Admin")
-    cy.get(SelectorsList.passowordField).type("1")
+    cy.get(SelectorsList.usernameField).type(userData.userFail.username)
+    cy.get(SelectorsList.passowordField).type(userData.userSucess.password)
     cy.get(SelectorsList.loginButton).click()
     cy.get(SelectorsList.wrongCredentialAlert)
     
