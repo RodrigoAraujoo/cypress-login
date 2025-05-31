@@ -176,5 +176,13 @@
     "wrappy": "^1.0.2",
     "yauzl": "^2.10.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RodrigoAraujoo/cypress-login.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RodrigoAraujoo/cypress-login/issues"
+  },
+  "homepage": "https://github.com/RodrigoAraujoo/cypress-login#readme",
   "description": ""
 }

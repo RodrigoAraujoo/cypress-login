@@ -1,35 +1,48 @@
 describe('Orange HRM Tests', () => {
+
+const SelectorsList = {
+
+  usernameField: "[name='username']",
+  passowordField: "[name='password']",
+  loginButton:"[type='submit']",
+  sectionTitleTopBar: ".oxd-topbar-header-breadcrumb > .oxd-text",
+  wrongCredentialAlert: '.oxd-alert',
+  wrongCredentialAlertUserRequired: ".oxd-input-field-error-message",
+}
+
   it('Login com sucesso', () => {
+
     cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
-    cy.get("[name='username']").type("Admin")
-    cy.get("[name='password']").type("admin123")
-    cy.get("[type='submit']").click()
+    cy.get(SelectorsList.usernameField).type("Admin")
+    cy.get(SelectorsList.passowordField).type("admin123")
+    cy.get(SelectorsList.loginButton).click()
     cy.location('pathname').should('equal', '/web/index.php/dashboard/index')
-    cy.get('.oxd-topbar-header-breadcrumb > .oxd-text').contains('Dashboard')
+    cy.get(SelectorsList.sectionTitleTopBar).contains('Dashboard')
 
   })
 
     it('Login falho', () => {
     cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
-    cy.get(':nth-child(2) > .oxd-input-group > :nth-child(2) > .oxd-input').type("test")
-    cy.get(':nth-child(3) > .oxd-input-group > :nth-child(2) > .oxd-input').type("test")
-    cy.get('.oxd-button').click()
-    cy.get('.oxd-alert')
+    cy.get(SelectorsList.usernameField).type("Admin")
+    cy.get(SelectorsList.passowordField).type("1")
+    cy.get(SelectorsList.loginButton).click()
+    cy.get(SelectorsList.wrongCredentialAlert)
     
   })
 
    it('Login com campo admin em branco', () => {
     cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
-    cy.get(':nth-child(2) > .oxd-input-group > :nth-child(2) > .oxd-input').type("")
-    cy.get(':nth-child(3) > .oxd-input-group > :nth-child(2) > .oxd-input').type("admin1234")
-    cy.get('.oxd-button').click()
-    
+    cy.get(SelectorsList.usernameField).should('have.value', '')
+    cy.get(SelectorsList.passowordField).type("admin1234")
+    cy.get(SelectorsList.loginButton).click()
+    cy.get(SelectorsList.wrongCredentialAlertUserRequired)
   })
 
    it('Login com campo senha em branco', () => {
     cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
-    cy.get(':nth-child(2) > .oxd-input-group > :nth-child(2) > .oxd-input').type("admin")
-    cy.get(':nth-child(3) > .oxd-input-group > :nth-child(2) > .oxd-input').type("")
+    cy.get(SelectorsList.usernameField).type("admin1234")
+    cy.get(SelectorsList.passowordField).should('have.value', '')
+    cy.get(SelectorsList.loginButton).click() 
     cy.get('.oxd-button').click()
     
   })
