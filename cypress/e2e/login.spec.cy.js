@@ -10,11 +10,13 @@ const SelectorsList = {
   sectionTitleTopBar: ".oxd-topbar-header-breadcrumb > .oxd-text",
   wrongCredentialAlert: '.oxd-alert',
   wrongCredentialAlertUserRequired: ".oxd-input-field-error-message",
+  myInfoButton: "[href='/web/index.php/pim/viewMyDetails']",
+  firtsNameField: "[name='firstName']",
+  lastNameField: "[name='lastName']",
+  nickNameField: ".oxd-input--active"
 }
 
-
-
-  it('Login com sucesso', () => {
+  it.only('Login com sucesso', () => {
 
     cy.visit('/auth/login')
     cy.get(SelectorsList.usernameField).type(userData.userSucess.username)
@@ -22,6 +24,13 @@ const SelectorsList = {
     cy.get(SelectorsList.loginButton).click()
     cy.location('pathname').should('equal', '/web/index.php/dashboard/index')
     cy.get(SelectorsList.sectionTitleTopBar).contains('Dashboard')
+    cy.get(SelectorsList.myInfoButton).click()
+    cy.location('pathname').should('include', '/web/index.php/pim/viewPersonalDetails')
+    cy.get(SelectorsList.firtsNameField).type('Teste')
+    cy.get(SelectorsList.lastNameField).type('Tesste')
+    cy.get(SelectorsList.nickNameField).eq(3).type('Test')
+
+
 
   })
 
